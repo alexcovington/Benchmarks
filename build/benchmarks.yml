@@ -150,7 +150,7 @@ jobs:
   pool: server
   timeoutInMinutes: 60
   # dependsOn: Baselines_Database
-  condition: eq(variables['am'], true)
+  condition: variables['am']
   strategy:
     maxParallel: 1
     matrix:
@@ -169,7 +169,7 @@ jobs:
   pool: server
   timeoutInMinutes: 60
   # dependsOn: Baselines_Database
-  condition: eq(variables['pm'], true)
+  condition: variables['pm']
   strategy:
     maxParallel: 1
     matrix:
