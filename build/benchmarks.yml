@@ -8,8 +8,10 @@ variables:
     value: $(Build.BuildId)
   - name: buildNumber
     value: $(Build.BuildNumber)
-  - name: timePeriod
-    value: $[lower(format('{0:tt}', pipeline.startTime))]
+  - name: am
+    value: $[lt(format('{0:HH}', pipeline.startTime), 12)]
+  - name: pm
+    value: $[ge(format('{0:HH}', pipeline.startTime), 12)]
 
 jobs:
 
@@ -148,7 +150,7 @@ jobs:
   pool: server
   timeoutInMinutes: 60
   # dependsOn: Baselines_Database
-  condition: eq(variables['timePeriod'], 'am')
+  condition: eq(variables['am'], true)
   strategy:
     maxParallel: 1
     matrix:
@@ -167,7 +169,7 @@ jobs:
   pool: server
   timeoutInMinutes: 60
   # dependsOn: Baselines_Database
-  condition: eq(variables['timePeriod'], 'pm')
+  condition: eq(variables['pm'], true)
   strategy:
     maxParallel: 1
     matrix:
