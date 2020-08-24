@@ -8,6 +8,10 @@ variables:
     value: $(Build.BuildId)
   - name: buildNumber
     value: $(Build.BuildNumber)
+  - name: isAM
+    value: eq(lower(format('{0:tt}', pipeline.startTime)), 'am')
+  - name: isPM
+    value: eq(lower(format('{0:tt}', pipeline.startTime)), 'pm')
 
 jobs:
 
@@ -146,7 +150,7 @@ jobs:
   pool: server
   timeoutInMinutes: 60
   # dependsOn: Baselines_Database
-  condition: eq(lower(format('{0:tt}', pipeline.startTime)), 'am')
+  condition: variables['isAM']
   strategy:
     maxParallel: 1
     matrix:
@@ -165,7 +169,7 @@ jobs:
   pool: server
   timeoutInMinutes: 60
   # dependsOn: Baselines_Database
-  condition: eq(lower(format('{0:tt}', pipeline.startTime)), 'pm')
+  condition: variables['isPM']
   strategy:
     maxParallel: 1
     matrix:
