@@ -22,8 +22,18 @@ namespace Benchmarks.Middleware
             _next = next;
         }
 
+        int count = 0;
+
         public Task Invoke(HttpContext httpContext)
         {
+            if (count < 10)
+            {
+                foreach (var key in httpContext.Request.Headers.Keys)
+                {
+                    Console.WriteLine($"{key} -> {httpContext.Request.Headers[key]}");
+                }
+            }
+
             if (httpContext.Request.Path.StartsWithSegments(_path, StringComparison.Ordinal))
             {
                 return WriteResponse(httpContext.Response);
