@@ -28,6 +28,7 @@ namespace Benchmarks.Middleware
         {
             if (count < 10)
             {
+                count++;
                 foreach (var key in httpContext.Request.Headers.Keys)
                 {
                     Console.WriteLine($"{key} -> {httpContext.Request.Headers[key]}");
